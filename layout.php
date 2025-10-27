@@ -25,17 +25,30 @@ ini_set('display_errors','1');
       }
     ?>
 
-    <!-- Contenido principal -->
-    <main class="mt-4">
+
+ <!-- Inicio sesion /Contenido -->
+ <main class="mt-4">
       <?php
+      if($_GET['p'] === 'iniciarSesion'){
+        $cnt = __DIR__ . '/elementos/iniciarSesion.php';
+        if (is_file($cnt) && is_readable($cnt)) {
+          require_once $cnt;
+        } else {
+          echo '<div class="alert alert-danger">No se encuentra/lee contenido: ' . htmlspecialchars($cnt) . '</div>';
+        }
+      }else{
         $cnt = __DIR__ . '/elementos/contenido.php';
         if (is_file($cnt) && is_readable($cnt)) {
           require_once $cnt;
         } else {
           echo '<div class="alert alert-danger">No se encuentra/lee contenido: ' . htmlspecialchars($cnt) . '</div>';
         }
+      }
+       
       ?>
     </main>
+
+
 
     <!-- Pie de página -->
     <?php

@@ -3,15 +3,31 @@
   <p class="text-muted">Usando include() por primera vez</p>
 
   <?php
-    $menu = [
+
+session_start();
+$_SESSION['usuario'] = 'juan'; //Simulamos usuario logueado
+$p= $_GET['p'] ?? 'inicio'; //Página principal
+unset($_SESSION['usuario']);
+
+    $menu= [
+      'inicio' => 'Inicio',
+      'contenido' => 'Productos',
+      'contacto' => 'Contacto',
+      'cerrarSesion' => 'Cerrar sesión'
+    ];
+
+    $menuInicio = [
+      'iniciarSesion' => 'Iniciar Sesion',
       'inicio' => 'Inicio',
       'contenido' => 'Productos',
       'contacto' => 'Contacto'
     ];
+
+    $menuActual = isset($_SESSION['usuario']) ? $menu : $menuInicio;
     ?>
 
     <ul class="nav nav-pills">
-  <?php foreach ($menu as $clave => $texto): ?>
+  <?php foreach ($menuActual as $clave => $texto): ?>
     <li class="nav-item">
       <a class="nav-link <?= ($p === $clave) ? 'active' : '' ?>"
          href="index.php?p=<?= $clave ?>">
