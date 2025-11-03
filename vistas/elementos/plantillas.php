@@ -179,3 +179,60 @@ function mostrarListadoUsuarios(): string {
 
     return $h;
 }
+
+// ========================================================
+// Función: mostrarListadoProductos()
+// Muestra una tabla con los productos si el usuario logueado es admin.
+// ========================================================
+function mostrarListadoProductos(): string {
+  require_once __DIR__ . '/../../nucleo/Database.php';
+  require_once __DIR__ . '/../../modelo/dao/DAOProducto.php';
+
+  $pdo = Database::getConnection();
+  $dao = new DAOProducto($pdo);
+  $productos = $dao->listar(); // ← devuelve Producto[]
+
+  $h = '<hr><h2 class="mt-4">👑 Administración de Productos</h2>';
+
+  if (!$productos) {
+      return $h . '<div class="alert alert-info mt-3">No hay productos registrados.</div>';
+  }
+
+  $h .= '<div class="table-responsive mt-3">
+          <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark text-center">
+              <tr><th>ID</th><th>Nombre</th><th>Precio</th></tr>
+            </thead><tbody>';
+
+  foreach ($productos as $p) {
+      /** @var Producto $p */
+      $id      = (int)$p->getId();
+      $nombre = htmlspecialchars($p->nombre, ENT_QUOTES, 'UTF-8');
+      $precio  = number_format($p->precio, 2, ',', '.');
+    
+
+      $h .= "<tr>
+               <td>{$id}</td>
+               <td>{$nombre}</td>
+               <td>{$precio}$</td>
+            
+             <td class='text-center'>
+             <a href='?p=productos&accion=editar&id={$id}' class='btn btn-sm btn-outline-primary me-1'>Editar</a>
+             <form method='post' action='?p=productos' class='d-inline' onsubmit='return confirm(\"¿Eliminar este producto?\");'>
+               <input type='hidden' name='accion' value='eliminar'>
+               <input type='hidden' name='id' value='{$id}'>
+               <button type='submit' class='btn btn-sm btn-outline-danger'>Eliminar</button>
+             </form>
+              </td>
+              </tr>";
+
+  }
+
+  $h .= '</tbody></table></div>';
+  
+  $h.= '<div class="mt-3">
+    <a href="?p=productos&accion=crear" class="btn btn-primary">➕ Nuevo producto</a>
+      </div>';
+
+  return $h;
+}
