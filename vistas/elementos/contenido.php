@@ -12,6 +12,7 @@ $productos = [
   "Aceitunas aliñadas"  => 2.50,
   "Tortas de aceite"    => 3.00
 ];
+*/
 ?>
 
 <h2 class="text-success text-center mt-4">Productos locales de Camas</h2>
@@ -21,16 +22,16 @@ $productos = [
     <tr>
       <th>Producto</th>
       <th>Precio (€)</th>
+      <th>Opciones</th>
+
     </tr>
   </thead>
   <tbody>
-    <?php foreach ($productos as $nombre => $precio): ?>
+    <?php foreach ($productos as $p): ?>
       <tr>
-        <td><?= htmlspecialchars($nombre) ?></td>
+        <td><?= htmlspecialchars($p-> $nombre) ?></td>
         <td><?= number_format($precio, 2, ',', '.') ?></td>
       </tr>
     <?php endforeach; ?>
   </tbody>
 </table>
-*/
-?>
