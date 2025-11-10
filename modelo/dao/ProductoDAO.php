@@ -13,7 +13,7 @@ final class ProductoDAO extends DAO
 
     /** @return Producto */
     protected function crearEntidad(array $fila): object {
-        $p = new Producto($fila['nombre'], (float)$fila['precio']);
+        $p = new Producto($fila['nombre'], (float)$fila['precio'], (int)$fila['stock'], $fila['descripcion']);
         if (isset($fila['id'])) { $p->setId((int)$fila['id']); }
         return $p;
     }
@@ -26,25 +26,27 @@ final class ProductoDAO extends DAO
 
         $id = $entidad->getId();
         if (empty($id)) {
-            $sql = "INSERT INTO {$this->tabla} (nombre, precio) VALUES (:n, :p)";
+            $sql = "INSERT INTO {$this->tabla} (nombre, precio, stock, descripcion) VALUES (:n, :p, :s, :d)";
             $st  = $this->pdo->prepare($sql);
-            $ok  = $st->execute([':n'=>$entidad->nombre, ':p'=>$entidad->precio]);
+            $ok  = $st->execute([':n'=>$entidad->nombre, ':p'=>$entidad->precio, ':s'=>$entidad->stock, ':d'=>$entidad->descripcion]);
             if ($ok) { $entidad->setId((int)$this->pdo->lastInsertId()); }
             return $ok;
         }
 
-        $sql = "UPDATE {$this->tabla} SET nombre=:n, precio=:p WHERE id=:id";
+        $sql = "UPDATE {$this->tabla} SET nombre=:n, precio=:p, stock=:s, descripcion=:d, WHERE id=:id";
         $st  = $this->pdo->prepare($sql);
         return $st->execute([
             ':n'=>$entidad->nombre,
             ':p'=>$entidad->precio,
+            ':s'=>$entidad->stock,
+            ':d'=>$entidad->descripcion
             ':id'=>$id
         ]);
     }
 
     /** @return Producto[] */
     public function listar(): array {
-        $sql = "SELECT id, nombre, precio FROM {$this->tabla} ORDER BY id ASC";
+        $sql = "SELECT id, nombre, precio,stock,descripcion FROM {$this->tabla} ORDER BY id ASC";
         $st  = $this->pdo->query($sql);
         $st->setFetchMode(PDO::FETCH_ASSOC);
 
