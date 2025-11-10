@@ -36,7 +36,7 @@ final class ProductoDAO extends DAO
             return $ok;
         }
 
-        $sql = "UPDATE {$this->tabla} SET nombre=:n, precio=:p, stock=:s, descripcion=:d, WHERE id=:id";
+        $sql = "UPDATE {$this->tabla} SET nombre=:n, precio=:p, stock=:s, descripcion=:d WHERE id=:id";
         $st  = $this->pdo->prepare($sql);
         return $st->execute([
             ':n'=>$entidad->nombre,
