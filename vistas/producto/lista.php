@@ -20,6 +20,9 @@ $esManager = ($rol === 'manager');
     <tr>
       <th>Producto</th>
       <th>Precio (€)</th>
+      <th>Stock</th>
+      <th>Descripcion</th>
+
       <?php if ($esManager): ?><th>Acciones</th><?php endif; ?>
     </tr>
   </thead>
@@ -28,6 +31,9 @@ $esManager = ($rol === 'manager');
     <tr>
       <td><?= htmlspecialchars($p->nombre) ?></td>
       <td><?= number_format((float)$p->precio, 2, ',', '.') ?></td>
+      <td><?= $p->stock ?></td>
+      <td><?= htmlspecialchars($p->descripcion) ?></td>
+
       <?php if ($esManager): ?>
         <td>
           <a href="index.php?p=productos&action=editar&id=<?= htmlspecialchars((string)$p->getId()) ?>" class="btn btn-sm btn-warning">✏️ Editar</a>

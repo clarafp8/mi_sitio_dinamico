@@ -22,10 +22,7 @@ class Producto extends Entidad
     public float $precio,
     public int $stock,
     public string $descripcion
-  ) {
-    
-
-  }
+  ) {}
   
     public static function vacio(): self
     {

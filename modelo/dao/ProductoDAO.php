@@ -49,7 +49,7 @@ final class ProductoDAO extends DAO
 
     /** @return Producto[] */
     public function listar(): array {
-        $sql = "SELECT id, nombre, precio,stock,descripcion FROM {$this->tabla} ORDER BY id ASC";
+        $sql = "SELECT id, nombre, precio, stock,descripcion FROM {$this->tabla} ORDER BY id ASC";
         $st  = $this->pdo->query($sql);
         $st->setFetchMode(PDO::FETCH_ASSOC);
 
