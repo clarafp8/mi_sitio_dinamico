@@ -215,7 +215,9 @@ function mostrarListadoProductos(?array $auth): string {
                 <thead class='table-primary'>
                   <tr>
                     <th>Producto</th>
-                    <th>Precio (€)</th>";
+                    <th>Precio (€)</th>
+                    <th>Stock</th>
+                    <th>Descripcion</th>";
 
     if ($esManager) {
         $html .= "<th>Acciones</th>";
@@ -228,10 +230,16 @@ function mostrarListadoProductos(?array $auth): string {
     foreach ($productos as $p) {
         $nombreProd = htmlspecialchars($p->nombre);
         $precio = number_format($p->precio, 2, ',', '.');
+        $stock = $p->stock;
+        $nombreDesc = htmlspecialchars($p->descripcion);
+
+
 
         $html .= "<tr>
                     <td>{$nombreProd}</td>
-                    <td>{$precio}</td>";
+                    <td>{$precio}</td>
+                    <td>{$stock}</td>
+                    <td>{$nombreDesc}</td>";
 
         if ($esManager) {
             $id = htmlspecialchars($p->getId());
