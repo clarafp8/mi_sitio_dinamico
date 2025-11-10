@@ -13,7 +13,10 @@ final class ProductoDAO extends DAO
 
     /** @return Producto */
     protected function crearEntidad(array $fila): object {
-        $p = new Producto($fila['nombre'], (float)$fila['precio'], (int)$fila['stock'], $fila['descripcion']);
+        // Verifica si 'descripcion' es null y asigna un valor por defecto
+        $descripcion = isset($fila['descripcion']) ? $fila['descripcion'] : '';
+
+        $p = new Producto($fila['nombre'], (float)$fila['precio'], (int)$fila['stock'], $descripcion);
         if (isset($fila['id'])) { $p->setId((int)$fila['id']); }
         return $p;
     }
@@ -39,7 +42,7 @@ final class ProductoDAO extends DAO
             ':n'=>$entidad->nombre,
             ':p'=>$entidad->precio,
             ':s'=>$entidad->stock,
-            ':d'=>$entidad->descripcion
+            ':d'=>$entidad->descripcion,
             ':id'=>$id
         ]);
     }
