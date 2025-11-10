@@ -34,12 +34,12 @@ $valId     = $esEdicion ? (int)$producto->getId() : 0;
 
   <div class="mb-3">
     <label class="form-label">Precio (€)</label>
-    <input class="form-control" name="precio" type="number" step="0.01" min="0" required
+    <input class="form-control" name="precio" type="number" step="0.01" required
            value="<?= htmlspecialchars($valPrecio) ?>">
   </div>
   <div class="mb-3">
     <label class="form-label">Stock</label>
-    <input class="form-control" name="stock" type="number" min="0" required
+    <input class="form-control" name="stock" type="number"  required
            value="<?= htmlspecialchars($valStock) ?>">
   </div>
   <div class="mb-3">
