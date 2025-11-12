@@ -54,7 +54,7 @@ function semillaProductosDatos(bool $reset = false): int
         resetTabla($pdo, 'productos');
     }
 
-    $sql = "INSERT INTO productos (nombre, precio) VALUES (:nombre, :precio)";
+    $sql = "INSERT INTO productos (nombre, precio, stock, descripcion) VALUES (:nombre, :precio, :stock, :descripcion)";
     $stmt = $pdo->prepare($sql);
 
     try {
@@ -64,6 +64,9 @@ function semillaProductosDatos(bool $reset = false): int
             $stmt->execute([
                 ':nombre' => (string)($p['producto'] ?? ''),
                 ':precio' => (float)($p['precio'] ?? 0.0),
+                ':stock' => (int)($p['stock'] ?? 0),
+                ':descripcion' => (string)($p['descripcion'] ?? "no hay descripcion del producto"),
+
             ]);
             $afectadas += $stmt->rowCount();
         }
