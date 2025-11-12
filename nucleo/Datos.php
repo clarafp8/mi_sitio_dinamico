@@ -27,26 +27,26 @@ function semillaProductosDatos(bool $reset = false): int
     $afectadas = 0;
 
     $productos = [
-        ['producto' => 'Pan de Camas',                   'precio' => 1.20],
-        ['producto' => 'Aceitunas aliñadas de Camas',    'precio' => 2.50],
-        ['producto' => 'Tortas de aceite',               'precio' => 3.00],
-        ['producto' => 'Aceite Virgen Extra “Aljarafe”', 'precio' => 6.80],
-        ['producto' => 'Jamón ibérico de recebo',        'precio' => 12.50],
-        ['producto' => 'Queso de cabra payoya',          'precio' => 4.75],
-        ['producto' => 'Miel de azahar del Aljarafe',    'precio' => 5.20],
-        ['producto' => 'Almendras fritas estilo barra',  'precio' => 3.40],
-        ['producto' => 'Bollos de anís tradicionales',   'precio' => 2.30],
-        ['producto' => 'Paté de aceituna verde',         'precio' => 3.10],
-        ['producto' => 'Vino blanco DO “Aljarafe”',      'precio' => 8.50],
-        ['producto' => 'Dulce de membrillo artesano',    'precio' => 2.90],
-        ['producto' => 'Anchoas en aceite de oliva',     'precio' => 7.20],
-        ['producto' => 'Chorizo casero del Aljarafe',    'precio' => 4.60],
-        ['producto' => 'Flor de sal del Guadalquivir',   'precio' => 2.70],
-        ['producto' => 'Mermelada de higo de la zona',   'precio' => 3.30],
-        ['producto' => 'Cervezas artesanas sevillanas',  'precio' => 2.80],
-        ['producto' => 'Tomate seco en aceite',          'precio' => 4.20],
-        ['producto' => 'Aceite arbequina 250 ml',        'precio' => 5.60],
-        ['producto' => 'Picos de pan artesanos',         'precio' => 1.80],
+        ['producto' => 'Pan de Camas',                   'precio' => 1.20 , 'stock' => 0, 'descripcion' => null],
+        ['producto' => 'Aceitunas aliñadas de Camas',    'precio' => 2.50 , 'stock' => 0, 'descripcion' => null],
+        ['producto' => 'Tortas de aceite',               'precio' => 3.00 , 'stock' => 0, 'descripcion' => null],
+        ['producto' => 'Aceite Virgen Extra “Aljarafe”', 'precio' => 6.80 , 'stock' => 0, 'descripcion' => null],
+        ['producto' => 'Jamón ibérico de recebo',        'precio' => 12.50 , 'stock' => 0, 'descripcion' => null],
+        ['producto' => 'Queso de cabra payoya',          'precio' => 4.75 , 'stock' => 0, 'descripcion' => null],
+        ['producto' => 'Miel de azahar del Aljarafe',    'precio' => 5.20 , 'stock' => 0, 'descripcion' => null],
+        ['producto' => 'Almendras fritas estilo barra',  'precio' => 3.40 , 'stock' => 0, 'descripcion' => null],
+        ['producto' => 'Bollos de anís tradicionales',   'precio' => 2.30 , 'stock' => 0, 'descripcion' => null],
+        ['producto' => 'Paté de aceituna verde',         'precio' => 3.10 , 'stock' => 0, 'descripcion' => null] ,
+        ['producto' => 'Vino blanco DO “Aljarafe”',      'precio' => 8.50 , 'stock' => 0, 'descripcion' => null],
+        ['producto' => 'Dulce de membrillo artesano',    'precio' => 2.90 , 'stock' => 0, 'descripcion' => null],
+        ['producto' => 'Anchoas en aceite de oliva',     'precio' => 7.20 , 'stock' => 0, 'descripcion' => null],
+        ['producto' => 'Chorizo casero del Aljarafe',    'precio' => 4.60 , 'stock' => 0, 'descripcion' => null],
+        ['producto' => 'Flor de sal del Guadalquivir',   'precio' => 2.70 , 'stock' => 0, 'descripcion' => null],
+        ['producto' => 'Mermelada de higo de la zona',   'precio' => 3.30 , 'stock' => 0, 'descripcion' => null],
+        ['producto' => 'Cervezas artesanas sevillanas',  'precio' => 2.80 , 'stock' => 0, 'descripcion' => null],
+        ['producto' => 'Tomate seco en aceite',          'precio' => 4.20 , 'stock' => 0, 'descripcion' => null],
+        ['producto' => 'Aceite arbequina 250 ml',        'precio' => 5.60 , 'stock' => 0, 'descripcion' => null],
+        ['producto' => 'Picos de pan artesanos',         'precio' => 1.80 , 'stock' => 0, 'descripcion' => null],
     ];
 
     // Si vas a resetear, hazlo SIEMPRE fuera de la transacción
@@ -54,7 +54,7 @@ function semillaProductosDatos(bool $reset = false): int
         resetTabla($pdo, 'productos');
     }
 
-    $sql = "INSERT INTO productos (nombre, precio) VALUES (:nombre, :precio)";
+    $sql = "INSERT INTO productos (nombre, precio, stock, descripcion) VALUES (:nombre, :precio, :stock, :descripcion)";
     $stmt = $pdo->prepare($sql);
 
     try {
@@ -64,6 +64,8 @@ function semillaProductosDatos(bool $reset = false): int
             $stmt->execute([
                 ':nombre' => (string)($p['producto'] ?? ''),
                 ':precio' => (float)($p['precio'] ?? 0.0),
+                ':stock' => (int)($p['stock'] ?? 0),
+                ':descripcion' => (string)($p['descripcion']),
             ]);
             $afectadas += $stmt->rowCount();
         }
